@@ -1,44 +1,39 @@
 package com.example.ucp2.repository
 
+import androidx.lifecycle.LiveData
 import com.example.ucp2.data.dao.JadwalDao
 import com.example.ucp2.data.entity.Jadwal
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class LocalRepositoryJadwal(private val jadwalDao: JadwalDao) : RepositoryJadwal {
 
     // Menambahkan jadwal
     override suspend fun addJadwal(jadwal: Jadwal) {
-        withContext(Dispatchers.IO) {
-            jadwalDao.insertJadwal(jadwal)
-        }
+        jadwalDao.addJadwal(jadwal)
     }
 
-    // Mendapatkan semua jadwal
-    override suspend fun getAllJadwal(): List<Jadwal> {
-        return withContext(Dispatchers.IO) {
-            jadwalDao.getAllJadwal()
-        }
+    override fun getAllJadwal(): Flow<List<Jadwal>> {
+        return jadwalDao.getAllJadwal()
+    }
+
+    override fun getJadwal(idJadwal: String): Flow<Jadwal>{
+        return jadwalDao.getJadwal(idJadwal)
+    }
+
+    override fun getJadwalJoin(idJadwal: String): Flow<List<Jadwal>>{
+        return jadwalDao.getJadwalJoin(idJadwal)
     }
 
     // Memperbarui jadwal
     override suspend fun updateJadwal(jadwal: Jadwal) {
-        withContext(Dispatchers.IO) {
-            jadwalDao.updateJadwal(jadwal)
-        }
+        jadwalDao.updateJadwal(jadwal)
     }
 
     // Menghapus jadwal
     override suspend fun deleteJadwal(jadwal: Jadwal) {
-        withContext(Dispatchers.IO) {
-            jadwalDao.deleteJadwal(jadwal)
-        }
+        jadwalDao.deleteJadwal(jadwal)
     }
 
-    // Mendapatkan detail jadwal berdasarkan ID
-    override suspend fun getJadwalDetail(id: Int): Jadwal {
-        return withContext(Dispatchers.IO) {
-            jadwalDao.getJadwalDetail(id)
-        }
-    }
 }
