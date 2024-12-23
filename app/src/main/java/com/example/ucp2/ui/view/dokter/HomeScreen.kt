@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Dokter
-import com.example.ucp2.viewmodel.DokterViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,7 +37,11 @@ import com.example.ucp2.ui.viewmodel.HomeUiState
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.Person
-import com.example.ucp2.ui.components.Dashboard
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.example.ucp2.R
+import com.example.ucp2.ui.theme.RemFont
+import com.example.ucp2.ui.theme.gamami
 
 
 @Composable
@@ -57,7 +59,7 @@ fun HomeScreen(
             TopHeader()
         },
         bottomBar = {
-            BottomNavigationBar(onAddDokter = onAddDokter,onDetailJW= onDetailJW) // Passing the navigation action
+            BottomNavigationBar(onAddDokter = onAddDokter,onDetailJW= onDetailJW)
         }
     ) { padding ->
 
@@ -69,8 +71,8 @@ fun HomeScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            SearchBar()
-            SchedulesSection(onDetailJW=onDetailJW, onAddJadwal = onAddJadwal) // Memanggil bagian jadwal
+
+            SchedulesSection(onDetailJW=onDetailJW, onAddJadwal = onAddJadwal)
             TopDoctorsSection(
                 listDokter = homeUiState.listDokter,
                 onCLick = {
@@ -79,6 +81,7 @@ fun HomeScreen(
                 modifier = Modifier.padding(top = 10.dp),
                 onAddDokter = onAddDokter
             )
+            BottomNavigationBar(onAddDokter = onAddDokter,onDetailJW= onDetailJW)
         }
     }
 }
@@ -88,10 +91,11 @@ fun TopHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .height(220.dp)
             .clip(shape = RoundedCornerShape(bottomStart = 60.dp, bottomEnd = 60.dp))
-            .background(Color(0xFF6D6D6B))
-            .padding(16.dp)
+            .background(Color(0xFFCDC1FF))
+            .padding(16.dp),
+
     ) {
         // Kartu utama
         Box(
@@ -108,50 +112,60 @@ fun TopHeader() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Foto profil di sisi kanan
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "Profile Picture",
+                    modifier = Modifier
+                        .size(90.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFCBD5E1))
+                        .border(2.dp, Color.White, CircleShape),
+                    contentScale = ContentScale.Crop
+                )
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
                     Text(
                         text = "BPJS Kesehatan",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = Color.White
+                        fontFamily = gamami,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            color = Color.Black
                         )
                     )
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.padding(1.dp))
                     Text(
                         text = "NAMA PESERTA: MIFTAHUL HUDA ",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.White
-                            , fontWeight = FontWeight.Bold
+                            color = Color.Black
+                            , fontWeight = FontWeight.Bold,
+                            fontFamily = RemFont
                         )
                     )
                     Text(
                         text = "PEKERJAAN: MARINIR",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.White
+                            color = Color.Black,
+                            fontFamily = RemFont
                             , fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
                         text = "Nomor: 1234 5678 9012 3456",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = RemFont
                         )
                     )
+
                 }
-                // Foto profil di sisi kanan
-                Image(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = "Profile Picture",
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFCBD5E1)) // Warna abu-abu pastel
-                        .border(2.dp, Color.White, CircleShape) // Border putih
-                )
+
             }
+        }
+        Box(modifier = Modifier.fillMaxWidth().offset(y = 120.dp)) {
+            SearchBar()
         }
     }
 }
@@ -199,13 +213,21 @@ fun SchedulesSection(onDetailJW: () -> Unit,onAddJadwal:() -> Unit) {
             onClick = onAddJadwal,
             modifier = Modifier,
             shape = RoundedCornerShape(topEnd = 50.dp, bottomStart = 50.dp)
+            , colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFCDC1FF),
+                contentColor = Color.Black
+            )
         ) {
             Text("Create Schedule")
         }
         Button(
             onClick = onDetailJW,
             modifier = Modifier,
-            shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp)
+            shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFCDC1FF),
+                contentColor = Color.Black
+            )
         ) {
             Text("View Schedules")
         }
@@ -333,16 +355,22 @@ fun TopDoctorsSection(
 
         IconButton(
             onClick = onAddDokter,
-            modifier = Modifier.align(Alignment.End)
+            modifier = Modifier
+                .align(Alignment.End)
+                .size(56.dp) // Ukuran tombol bulat
+                .clip(CircleShape)
+                .background(Color(0xFFE7FBB4)) // Warna latar belakang
+                .border(1.dp, Color.Black, CircleShape) // Menambahkan border putih
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = "Add Doctor",
-                tint = MaterialTheme.colorScheme.primary
+                tint = Color.Unspecified // Menghilangkan tint agar mengikuti warna latar belakang
             )
         }
 
-        // LazyColumn untuk menampilkan daftar dokter
+
+
         LazyColumn {
             items(items = listDokter, itemContent = { dokter ->
                 // Dapatkan warna spesialisasi untuk dokter ini
@@ -374,11 +402,10 @@ fun DoctorCard(
     name: String,
     speciality: String,
     location: String,
-    workHours: String, // Menambahkan parameter untuk jam kerja
+    workHours: String,
     onClick: () -> Unit,
-    color: Color // Menambahkan parameter untuk warna spesialis
+    color: Color
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -391,10 +418,11 @@ fun DoctorCard(
                 brush = Brush.radialGradient(
                     colors = listOf(Color.Black, Color.Gray),
                     center = Offset(50f, 50f),
-                    radius = 100f // Radius gradien
+                    radius = 100f
                 ),
                 shape = RoundedCornerShape(8.dp)
             )
+
             .offset(x = 18.dp, y = 1.dp)
     ) {
         Image(
