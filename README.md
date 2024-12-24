@@ -1,4 +1,4 @@
-![UPDATE1](https://github.com/user-attachments/assets/9ceefc29-9767-434b-aea1-b0ca98ecc553)halaman utama  READ DOKTER
+halaman utama  READ DOKTER
 
 ![homescreen](https://github.com/user-attachments/assets/98a3cd8e-85aa-476d-82d6-52a8c1bbca75)
 
@@ -62,6 +62,12 @@ WARNA KHUSUS DI SETIAP SPESIALIS
 
 ![warna khusuns spesialis](https://github.com/user-attachments/assets/40ab2b1b-a784-4eb3-8519-7269c1362e29)
 ![warna khusus spesialis](https://github.com/user-attachments/assets/6ef95fbc-99f8-482f-8232-896b14ff64ed)
+
+
+
+
+LINK VIDIO PENJELASAN GOOGLEDRIVE
+https://drive.google.com/drive/folders/11AZw_7sOOZg-HAk3FfPJ3RD618HqXjJj?usp=sharing
 
 
 
